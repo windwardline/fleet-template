@@ -29,4 +29,8 @@ cannot. Run it before first release.
    `security find-generic-password -s anthropic-actions -w | gh secret set ANTHROPIC_API_KEY -R windwardline/<name>`
 7. On launch (production URL live): the launch registry rule applies — Labs
    register, portfolio, and both READMEs update in the same change set.
-8. Verify: `windwardline/windwardline/scripts/fleet-conformance.sh` passes.
+8. Stack: build on the preferred stack (FLEET.md → Preferred stack). A
+   deviation needs the owner's approval *before* adoption, recorded in this
+   repo's AGENTS.md as `Stack exception (owner-approved YYYY-MM-DD): ...` —
+   the conformance checker fails unrecorded deviations.
+9. Verify: `windwardline/windwardline/scripts/fleet-conformance.sh` passes.
