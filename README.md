@@ -19,7 +19,10 @@ cannot. Run it before first release.
    the AGENTS.md operating contract.
 3. App-class repos: swap `.github/dependabot.yml` for the npm+actions form
    (copy from mimic), and uncomment the OSV and Headers live blocks in
-   `security.yml`.
+   `security.yml` (replace `{{DOMAIN}}`). Adjust `vercel.json`'s CSP to the
+   app's real needs — the seeded seven-header set is the conformance floor,
+   explicit always. App-class also means a header contract test (copy
+   timeshift's `security-headers.test.ts`).
 4. Enable auto-merge:
    `gh repo edit windwardline/<name> --enable-auto-merge`
 5. Create the ruleset (required checks = every PR-running CI and scan job by
@@ -33,4 +36,7 @@ cannot. Run it before first release.
    deviation needs the owner's approval *before* adoption, recorded in this
    repo's AGENTS.md as `Stack exception (owner-approved YYYY-MM-DD): ...` —
    the conformance checker fails unrecorded deviations.
-9. Verify: `windwardline/windwardline/scripts/fleet-conformance.sh` passes.
+9. Collects any user data? Ship `/privacy` in the house form — what is kept,
+   every processor named, retention, deletion contact — linked from the
+   surface where collection happens (copy timeshift's `app/privacy/page.tsx`).
+10. Verify: `windwardline/windwardline/scripts/fleet-conformance.sh` passes.
