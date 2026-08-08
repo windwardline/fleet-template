@@ -12,7 +12,7 @@ TODO(exact dev/test/lint/typecheck/build commands)
 
 ## Gates — CI in order
 
-TODO(ci.yml steps in order). Push to main deploys production. A parallel `security.yml` (PRs, pushes, weekly cron) gates Semgrep and secret scan; a post-deploy job asserts the production security headers. An advisory Claude review runs on every same-repo PR via `claude-review.yml`, which deliberately calls the fleet reusable at `@main` — one merge updates every repo. It activates only when the `ANTHROPIC_API_KEY` secret is present; fork PRs never receive secrets, so they skip it by security design.
+TODO(ci.yml steps in order). Push to main deploys production. A parallel `security.yml` (PRs, pushes, weekly cron) gates Semgrep and secret scan; a post-deploy job asserts the production security headers. An advisory Claude review runs on every same-repo PR via `claude-review.yml`, which deliberately calls the fleet reusable at `@main` — one merge updates every repo. It activates only when the `CLAUDE_CODE_OAUTH_TOKEN` secret is present — reviews bill the owner's Claude subscription, not Console credits; fork PRs never receive secrets, so they skip it by security design.
 
 ## Laws
 
