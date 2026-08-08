@@ -29,7 +29,7 @@ cannot. Run it before first release.
    name, linear history, no bypass actors) — copy an existing repo's:
    `gh api repos/windwardline/craft/rulesets --jq '.[0]'` as the shape.
 6. Propagate the review secret:
-   `security find-generic-password -s anthropic-actions -w | gh secret set ANTHROPIC_API_KEY -R windwardline/<name>`
+   `security find-generic-password -s anthropic-actions-oauth -w | gh secret set CLAUDE_CODE_OAUTH_TOKEN -R windwardline/<name>`
 7. On launch (production URL live): the launch registry rule applies — Labs
    register, portfolio, and both READMEs update in the same change set.
 8. Stack: build on the preferred stack (FLEET.md → Preferred stack). A
