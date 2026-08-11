@@ -24,7 +24,16 @@ jobs:
           node-version: '24'
       # TODO: this repo's real gates. Static-site default below; app repos
       # replace with npm ci → typecheck → lint → test → build.
+      # Activates when the repo has an index.html. The template ships none, so
+      # validating unconditionally made CI red here from the day the template
+      # was created — every repo started from a red example, and a permanently
+      # failing gate teaches people to ignore the gate.
       - name: Validate HTML
-        run: npx --yes html-validate@9 index.html
+        run: |
+          if [ -f index.html ]; then
+            npx --yes html-validate@9 index.html
+          else
+            echo "No index.html in this repo yet; this gate activates when one exists."
+          fi
       - name: Validate vercel.json parses
         run: node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8'))"
