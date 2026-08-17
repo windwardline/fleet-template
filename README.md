@@ -13,8 +13,12 @@ cannot. Run it before first release.
 
 ## After creating a repo
 
-1. Replace every `{{DOMAIN}}` and `{{NAME}}` placeholder (LICENSE, SECURITY.md,
-   AGENTS.md, security.yml).
+1. Install the house license, then replace every `{{DOMAIN}}` and `{{NAME}}`
+   placeholder (LICENSE, SECURITY.md, AGENTS.md, security.yml):
+
+   ```bash
+   mv templates/LICENSE LICENSE && rmdir templates
+   ```
 2. Fill in `.github/workflows/ci.yml` with the repo's real gates, and complete
    the AGENTS.md operating contract.
 3. App-class repos: swap `.github/dependabot.yml` for the npm+actions form
@@ -40,3 +44,12 @@ cannot. Run it before first release.
    every processor named, retention, deletion contact — linked from the
    surface where collection happens (copy timeshift's `app/privacy/page.tsx`).
 10. Verify: `windwardline/windwardline/scripts/fleet-conformance.sh` passes.
+
+## License
+
+The template ships under MIT (root `LICENSE`). Its purpose is to be copied, so
+the license and the "Use this template" button say the same thing.
+
+Repositories created from it are proprietary. `templates/LICENSE` carries the
+house notice with the `{{DOMAIN}}` placeholder intact, and step 1 above moves
+it into place. Skip that step and the new repo ships MIT by accident.
