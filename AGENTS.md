@@ -1,6 +1,6 @@
 # {{NAME}} — operating contract
 
-Operating contract for AI work in this repo; the global `~/AGENTS.md` still applies. {{NAME}} is TODO(one sentence: what this is). Live at {{DOMAIN}}.
+Operating contract for AI work in this repo; the global `~/AGENTS.md` still applies. Work here follows the CONVERGE cycle and delivery discipline in `FLEET.md` (windwardline/windwardline) — find → refute → verify yourself → fix → re-rank → test → update → report, and the delivery rules under it. {{NAME}} is TODO(one sentence: what this is). Live at {{DOMAIN}}.
 
 ## Stack — do not substitute without flagging
 
