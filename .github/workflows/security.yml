@@ -6,8 +6,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "17 9 * * 1"   # weekly: Semgrep, CodeQL, Secret scan, License policy
-    - cron: "17 13 * * *"  # daily: Dependency scan + Headers live
+    - cron: "17 9 * * 1"   # weekly: Semgrep and Secret scan
   workflow_dispatch:
 
 permissions:
@@ -54,7 +53,9 @@ jobs:
       # enforces pinning is itself pinned; Dependabot carries version bumps.
       - uses: windwardline/windwardline/actions/verify-action-pins@a7df3fb364021d34f501cd1aa3a481f39135c034 # v1.0.0
 
-  # TODO(app-class repos): uncomment — requires a committed lockfile.
+  # TODO(app-class repos): uncomment — requires a committed lockfile. Enabling
+  # this job also requires adding `17 13 * * *` to the schedule above so the
+  # changing advisory database is read daily.
   # dependency-scan:
   #   name: Dependency scan
   #   # No schedule guard, deliberately. Semgrep and Secret scan read repo
@@ -74,7 +75,8 @@ jobs:
   #     contents: read
   #     security-events: write
 
-  # TODO(prod-facing repos): uncomment and replace {{DOMAIN}}.
+  # TODO(prod-facing repos): uncomment and replace {{DOMAIN}}. Enabling this
+  # job also requires adding `17 13 * * *` to the schedule above.
   # headers-live:
   #   name: Headers live
   #   if: github.event_name != 'pull_request'
