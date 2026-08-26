@@ -51,7 +51,7 @@ jobs:
       # A step, not a job: the gate rides an already-required check, so no
       # ruleset change. Pinned by SHA like every other action — the gate that
       # enforces pinning is itself pinned; Dependabot carries version bumps.
-      - uses: windwardline/windwardline/actions/verify-action-pins@a7df3fb364021d34f501cd1aa3a481f39135c034 # v1.0.0
+      - uses: windwardline/windwardline/actions/verify-action-pins@7e6d53cdf02944bf21cab73e13104386e9a4735a # v1.1.1
 
   # TODO(app-class repos): uncomment — requires a committed lockfile. Enabling
   # this job also requires adding `17 13 * * *` to the schedule above so the
