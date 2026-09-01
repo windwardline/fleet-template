@@ -34,7 +34,12 @@ finish, so what runs is what is written here rather than what a hook guessed fro
 `package.json`. Each key states its own boundary: `gate:` runs at session end and
 must be local and quick; `release:` runs before a pull request and may be slow;
 `cadence:` is scheduled or needs the live machine and is run by neither.
+The two below are the template's own gates and they run as they stand; replace
+them with this project's real gates as it grows one. A placeholder here would
+fail CI on the first pull request, which is the point — a repo cannot inherit a
+gate list that was never runnable.
 
 ```fleet-gates
-gate: TODO(one runnable command per gate, in the order CI runs them)
+gate: if [ -f index.html ]; then npx --yes html-validate@9 index.html; else echo "No index.html in this repo yet; this gate activates when one exists."; fi
+gate: node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8'))"
 ```
