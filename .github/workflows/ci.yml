@@ -28,12 +28,20 @@ jobs:
       # validating unconditionally made CI red here from the day the template
       # was created — every repo started from a red example, and a permanently
       # failing gate teaches people to ignore the gate.
-      - name: Validate HTML
+
+      # Runs exactly the gates AGENTS.md declares in its fleet-gates block, so the
+      # contract's gate list is executable rather than prose. Byte-identical in
+      # every fleet repository with CI; the conformance checker compares it.
+      - name: Run declared gates
         run: |
-          if [ -f index.html ]; then
-            npx --yes html-validate@9 index.html
-          else
-            echo "No index.html in this repo yet; this gate activates when one exists."
-          fi
-      - name: Validate vercel.json parses
-        run: node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8'))"
+          gates=$(awk '/^```fleet-gates$/{o=1;next} o&&/^```$/{o=0;next} o&&/^gate: /{sub(/^gate: /,"");print}' AGENTS.md)
+          [ -n "$gates" ] || { echo "AGENTS.md declares no gate: entry in its fleet-gates block" >&2; exit 1; }
+          n=0
+          while IFS= read -r gate; do
+            [ -n "$gate" ] || continue
+            echo "::group::$gate"
+            sh -c "$gate"
+            echo "::endgroup::"
+            n=$((n + 1))
+          done <<< "$gates"
+          echo "$n declared gate(s) executed."
