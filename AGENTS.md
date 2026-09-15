@@ -8,6 +8,33 @@ Work here follows the CONVERGE cycle and delivery discipline in `FLEET.md` (wind
 
 TODO(framework + notable deps with versions worth pinning or flagging)
 
+**Email is decided, not a TODO.** Resend is the fleet's only outbound provider —
+transactional, auth and relay alike (`FLEET.md`, "Email"). A second provider is a
+stack deviation and needs an owner-approved `Stack exception` line here before
+adoption, never after. Delete this paragraph only if this repo will never send
+mail; if it will, three rules apply and none of them are obvious:
+
+- **A key that leaves this machine is scoped.** `sending_access` bound to one
+  `domain_id`, never the master key, because anything pasted into a third
+  party's config is held by that third party. Scope cannot be read back from
+  `/api-keys` — prove it by behaviour (a scoped key answers 403 for any other
+  domain), and give it a Keychain item and an `ops/credentials.tsv` row.
+- **Suppression is a failure that reports success.** Resend accepts a send to a
+  suppressed address, records it `suppressed`, delivers nothing, and returns
+  2xx — so `res.ok` is true and the user is told to check an inbox nothing will
+  reach. If this repo owns its own send, check `GET /suppressions/:email` first
+  and name the cause; 200 is suppressed, 404 is clear, and anything else means
+  neither. That lookup **fails open** — a provider hiccup must not become a
+  total sign-in outage — but it never treats "could not check" as "clear".
+- **Two API traps.** `/emails/metrics` answers 200 with a silently narrowed
+  window past the 30-day retention, so compare the echoed `start_date` to what
+  you asked for. And `urllib`'s default `Python-urllib/3.x` User-Agent is
+  refused 403 on every path, which reads exactly like a dead key.
+
+Account-wide suppression, domain and bounce health is swept weekly by
+`ops/resend-health.py`; that sweep is the fleet's mechanism and this repo does
+not reimplement it.
+
 ## Commands
 
 TODO(exact dev/test/lint/typecheck/build commands)
